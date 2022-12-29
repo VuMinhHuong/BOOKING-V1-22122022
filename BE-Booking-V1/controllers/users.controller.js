@@ -5,4 +5,18 @@ const usersModel = require("../models/users.model");
 // );
 
 //getall
+
+module.exports.login = usersModel.login;
+module.exports.createUser = usersModel.createUser;
+module.exports.resetPassword = usersModel.resetPassword;
+module.exports.newPassword = usersModel.newPassword;
+module.exports.getUserLogin = usersModel.getUserLogin;
+// module.exports.newPassword = usersModel.updateUser;
+//hompage
 module.exports.getAll = usersModel.getAll;
+module.exports.getAllPosts = usersModel.getAllPosts;
+module.exports.getPostsMB = usersModel.getPostsMB;
+module.exports.getPostsMN = usersModel.getPostsMN;
+module.exports.getPostsMT = usersModel.getPostsMT;
+module.exports.getDetail = usersModel.getDetail;
+module.exports.getPersonal = usersModel.getPersonal;
