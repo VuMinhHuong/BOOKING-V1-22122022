@@ -1,15 +1,7 @@
-// import "./UserPage.css";
-// import React from "react";
-
-// function UserPage(props) {
-//   return <h1>Đây là trang UserPage</h1>;
-// }
-
-// export default UserPage;
-
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
+import { useCookies } from "react-cookie";
 
 import {
   MDBCol,
@@ -28,13 +20,16 @@ import {
 } from "mdb-react-ui-kit";
 import CarouselAlbum from "../HomePage/CarouselAlbum";
 
-export default function UserPage() {
+export default function Myprofile() {
   const [per, setPer] = useState([]);
   const [post, setPost] = useState([]);
   let params = useParams();
 
+  const [cookies, setCookie] = useCookies(["Cookie"]);
+  let id = cookies.userID;
+
   useEffect(() => {
-    fetch(`http://127.0.0.1:3001/user/personal/${params.id}`)
+    fetch(`http://127.0.0.1:3001/user/personal/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setPer(data[0][0]);
@@ -148,7 +143,8 @@ export default function UserPage() {
                       <MDBCardText>
                         {" "}
                         <div style={{ fontSize: "40px", color: "black" }}>
-                          Xin chào! Tôi là {per.fistName}.
+                          My profile!
+                          {/* {per.fistName}. */}
                         </div>
                         <div>Bắt đầu tham gia vào 2021</div>
                         <div style={{ fontSize: "20px", color: "black" }}>
