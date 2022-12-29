@@ -1,12 +1,19 @@
-import "./LoginPage.css";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+// import "./LoginPage.css";
+// import React from "react";
 
+// function LoginPage(props) {
+//   return <h1>Đây là trang LoginPage</h1>;
+// }
+
+// export default LoginPage;
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Cookies, useCookies } from "react-cookie"; //import cookie để dùng
 function LoginPage() {
+  const [cookies, setCookie, removeCookie] = useCookies(["Cookie"]); //hbjbhjnjbjmbn
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [message, setMessage] = useState("");
   let handleUserChange = (e) => {
     e.preventDefault();
     setEmail({
@@ -17,121 +24,71 @@ function LoginPage() {
     setPassword({ password: e.target.value });
   };
 
+  let handleSubmit = (e) => {
+    e.preventDefault();
+    let newUser = {
+      email: email.email,
+      password: password.password,
+    };
+    // console.log("handleSubmit",newUser);
+    fetch(`http://127.0.0.1:3001/user/loginUser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log("day la post",data);
+        setMessage(data.message);
+        if (data.message === "Login seccessfully") {
+          console.log("dang nhap thanh cong");
+          setCookie("userID", data.userId);
+
+          window.location.href = "http://localhost:3000/";
+        }
+      });
+  };
+
   return (
     <>
       <div>
-        <div className="header containerLogin">
+        <div className="header">
           <div className="header-main">
             <h1>Booking House Login</h1>
             <div className="header-bottom">
               <div className="header-right w3agile">
                 <div className="header-left-bottom agileinfo">
-                  <form
-                    action="#"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-
-                      let newUser = {
-                        email: email.email,
-                        password: password.password,
-                      };
-                      console.log("handleSubmit", newUser);
-                      console.log(newUser);
-                      if (newUser.email === "" && newUser.password === "") {
-                        Swal.fire({
-                          position: "centen-end",
-                          color: "red",
-                          icon: "warning",
-                          title: " Email end Password cannot be empty!",
-                          showConfirmButton: false,
-                          timer: 3000,
-                        });
-                      } else if (
-                        newUser.password !== "" &&
-                        newUser.email === ""
-                      ) {
-                        Swal.fire({
-                          position: "centen-end",
-                          color: "red",
-                          icon: "warning",
-                          title: " Email cannot be empty!",
-                          showConfirmButton: false,
-                          timer: 3000,
-                        });
-                      } else if (
-                        newUser.password === "" &&
-                        newUser.email !== ""
-                      ) {
-                        Swal.fire({
-                          position: "centen-end",
-                          color: "red",
-                          icon: "warning",
-                          title: " Password cannot be empty!",
-                          showConfirmButton: false,
-                          timer: 3000,
-                        });
-                      }
-
-                      fetch(`http://127.0.0.1:3001/user/loginUser`, {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(newUser),
-                      })
-                        .then((res) => res.json())
-                        .then((data) => {
-                          console.log("day la post", data);
-
-                          if (data.message === "user is not exits") {
-                            Swal.fire({
-                              position: "centen-end",
-                              color: "red",
-                              icon: "warning",
-                              title: "Email is not exits !",
-                              showConfirmButton: false,
-                              timer: 3000,
-                            });
-                          } else if (data.message === "sai passs") {
-                            Swal.fire({
-                              position: "centen-end",
-                              color: "red",
-                              icon: "warning",
-                              title: "Wrong password",
-                              showConfirmButton: false,
-                              timer: 3000,
-                            });
-                          }
-                          if (data.message === "login seccessfully") {
-                            Swal.fire({
-                              position: "centen-end",
-                              icon: "success",
-                              title: "Login successfully",
-                              showConfirmButton: false,
-                              timer: 3000,
-                            });
-                            // localStorage.setItem("user_info", data.user_info);
-
-                            // let user_info = localStorage.getItem("user_info");
-
-                            window.location.href = "http://localhost:3000/";
-                          }
-                          // setUser(data)
-                        });
-                    }}
-                  >
+                  <form action="#" onSubmit={handleSubmit}>
                     <input
-                      type="email"
+                      type="text"
                       name="name"
                       onChange={handleUserChange}
-                      placeholder="Email"
                     />
+
+                    <div style={{ margin: "0 0 10px 0", color: "red" }}>
+                      {message === "Email is not exits" ||
+                      message === "Invalid email" ? (
+                        <div>{message}</div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
                     <input
                       type="password"
                       name="password"
                       onChange={handlePasswordChange}
-                      placeholder="Password"
                     />
+                    <div style={{ margin: "0 0 0 0", color: "red" }}>
+                      {message !== "Email is not exits" &&
+                      message !== "Invalid email" &&
+                      message !== "Login seccessfully" ? (
+                        <div>{message}</div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
                     <div className="remember">
                       <span className="checkbox1">
                         <label className="checkbox">
@@ -141,8 +98,8 @@ function LoginPage() {
                       </span>
                       <div className="forgot">
                         <h6>
-                          <Link to="/forgotPasswordPage">
-                            <div>Forgot Password?</div>
+                          <Link to="/forgetpassword">
+                            <a>Forgot Password?</a>
                           </Link>
                         </h6>
                       </div>
@@ -156,7 +113,7 @@ function LoginPage() {
                     </div>
                   </div>
                   <div className="header-social wthree">
-                    <Link to="/registerPage">
+                    <Link to="/register">
                       {" "}
                       <input type="submit" value="Register" />
                     </Link>
@@ -170,5 +127,6 @@ function LoginPage() {
     </>
   );
 }
-
 export default LoginPage;
+
+

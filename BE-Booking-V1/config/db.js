@@ -3,8 +3,6 @@ let pool = mysql.createPool({
   host: "localhost",
   user: "root",
   database: "hotel_booking",
-  password: "phong@3856734",
+  password: "thanhpham1995@",
 });
 module.exports = pool.promise();
-
-

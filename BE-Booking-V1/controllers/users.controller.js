@@ -5,14 +5,18 @@ const usersModel = require("../models/users.model");
 // );
 
 //getall
-module.exports.getAll = usersModel.getAll;
-// get homepage
-// module.exports.getHomepage = usersModel.getHomePage;
-// post login
+
 module.exports.login = usersModel.login;
-// createUser
 module.exports.createUser = usersModel.createUser;
-//resetPassword
 module.exports.resetPassword = usersModel.resetPassword;
-//updatePass
-// module.exports.updatePass = usersModel.updatePass;
+module.exports.newPassword = usersModel.newPassword;
+module.exports.getUserLogin = usersModel.getUserLogin;
+// module.exports.newPassword = usersModel.updateUser;
+//hompage
+module.exports.getAll = usersModel.getAll;
+module.exports.getAllPosts = usersModel.getAllPosts;
+module.exports.getPostsMB = usersModel.getPostsMB;
+module.exports.getPostsMN = usersModel.getPostsMN;
+module.exports.getPostsMT = usersModel.getPostsMT;
+module.exports.getDetail = usersModel.getDetail;
+module.exports.getPersonal = usersModel.getPersonal;

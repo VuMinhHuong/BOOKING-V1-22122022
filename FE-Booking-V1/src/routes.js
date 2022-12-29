@@ -7,6 +7,8 @@ import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 import UserPage from "./pages/UserPage/UserPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
+import Detail from "./pages/Detail/Detail.jsx";
+import Myprofile from "./pages/Myprofile/Myprofile";
 import React from "react";
 
 let routes = [
@@ -42,7 +44,7 @@ let routes = [
   },
   {
     id: 7,
-    path: "/userPage",
+    path: "/userPage/:id",
     element: <UserPage />,
   },
   {
@@ -54,6 +56,16 @@ let routes = [
     id: 9,
     path: "/forgotPasswordPage",
     element: <ForgotPasswordPage />,
+  },
+  {
+    id: 10,
+    path: "/detailpage/:id",
+    element: <Detail />,
+  },
+  {
+    id: 11,
+    path: "/myprofile",
+    element: <Myprofile />,
   },
 ];
 export default routes;
