@@ -6,3 +6,13 @@ const usersModel = require("../models/users.model");
 
 //getall
 module.exports.getAll = usersModel.getAll;
+// get homepage
+// module.exports.getHomepage = usersModel.getHomePage;
+// post login
+module.exports.login = usersModel.login;
+// createUser
+module.exports.createUser = usersModel.createUser;
+//resetPassword
+module.exports.resetPassword = usersModel.resetPassword;
+//updatePass
+// module.exports.updatePass = usersModel.updatePass;
