@@ -73,7 +73,6 @@ module.exports = {
         });
       } else {
         let id = Math.floor(Math.random() * 10000000);
-
         db.execute("SELECT*FROM users WHERE email=?", [email])
           .then((data) => {
             let [rows] = data;
